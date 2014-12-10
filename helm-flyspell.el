@@ -36,20 +36,21 @@
 
 (defun helm-flyspell--option-candidates (word)
   "Return a set of options for the given WORD."
-  (let ((opts (list (cons (format "Save \"%s\"" word) 'save)
-                    (cons (format "Accept (session) \"%s\"" word) 'session)
-                    (cons (format "Accept (buffer) \"%s\"" word) 'buffer))))
+  (let ((opts (list (cons (format "Save \"%s\"" word) (cons 'save word))
+                    (cons (format "Accept (session) \"%s\"" word) (cons 'session word))
+                    (cons (format "Accept (buffer) \"%s\"" word) (cons 'buffer word)))))
     (unless (string= helm-pattern "")
-      (setq opts (append opts (list (cons (format "Save \"%s\"" helm-pattern) 'save)
-                                    (cons (format "Accept (session) \"%s\"" helm-pattern) 'session)
-                                    (cons (format "Accept (buffer) \"%s\"" helm-pattern) 'buffer)
-                                    ))))
+      (setq opts (append opts (list (cons (format "Save \"%s\"" helm-pattern) (cons 'save helm-pattern))
+                                    (cons (format "Accept (session) \"%s\"" helm-pattern) (cons 'session helm-pattern))
+                                    (cons (format "Accept (buffer) \"%s\"" helm-pattern) (cons 'buffer helm-pattern))))))
     opts
     ))
 
 
 (defun helm-flyspell (candidates word)
-  "Run helm for the given CANDIDATES given by flyspell for the WORD."
+  "Run helm for the given CANDIDATES given by flyspell for the WORD.
+Return a selected word to use as a replacement or
+a tuple of (command, word) to be used by flyspell-do-correct."
   (helm :sources (list (helm-build-sync-source (format "Suggestions for \"%s\" in dictionary \"%s\""
                                                        word (or ispell-local-dictionary
                                                                 ispell-dictionary
@@ -111,8 +112,17 @@ Adapted from `flyspell-correct-word-before-point'."
             (error "Ispell: error in Ispell process"))
            (t
             ;; The word is incorrect, we have to propose a replacement.
-            (flyspell-do-correct (helm-flyspell (third poss) word)
-                                 poss word cursor-location start end opoint)))
+            (let ((res (helm-flyspell (third poss) word)))
+              (cond ((stringp res)
+                    (flyspell-do-correct res poss word cursor-location start end opoint))
+                    (t
+                     (let ((cmd (car res))
+                           (wrd (cdr res)))
+                       (if (string= wrd word)
+                           (flyspell-do-correct cmd poss wrd cursor-location start end opoint)
+                         (progn
+                           (flyspell-do-correct cmd poss wrd cursor-location start end opoint)
+                           (flyspell-do-correct wrd poss word cursor-location start end opoint)))))))))
           (ispell-pdict-save t)))))
 
 
