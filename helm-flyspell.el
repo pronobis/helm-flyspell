@@ -2,6 +2,8 @@
 
 ;; Copyright (C) 2014 Andrzej Pronobis <a.pronobis@gmail.com>
 
+;; Package-Requires: ((helm "1.6.5"))
+
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
