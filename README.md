@@ -9,10 +9,10 @@ To use, just put your cursor on or after the misspelled word and run `helm-flysp
 ```
 
 When invoked, it will show the list of corrections suggested by Flyspell and options to save the word in your personal dictionary or accept it in the buffer or the session.
-![](https://github.com/pronobis/helm-flyspell/blob/master/images/screenshot1.png)
+![](./images/screenshot1.png?raw=true)
 
 If a pattern is typed, it will be used to filter the corrections. It can also be directly saved to the dictionary, even if it is different from the initial word. The new typed word will also replace the word typed in the buffer.
-![](https://github.com/pronobis/helm-flyspell/blob/master/images/screenshot2.png)
+![](./images/screenshot2.png?raw=true)
 
 
 Thanks
