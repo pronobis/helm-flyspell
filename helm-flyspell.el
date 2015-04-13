@@ -88,6 +88,7 @@ a tuple of (command, word) to be used by flyspell-do-correct."
         :prompt "Correction: "))
 
 
+;;;###autoload
 (defun helm-flyspell-correct ()
   "Use helm for flyspell correction.
 Adapted from `flyspell-correct-word-before-point'."
