@@ -1,4 +1,4 @@
-;;; helm-flyspell.el -- Helm extension for correcting words with flyspell
+;;; helm-flyspell.el -- Helm extension for correcting words with flyspell  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014 Andrzej Pronobis <a.pronobis@gmail.com>
 
@@ -37,16 +37,12 @@
 
 ;;; Code:
 
-;; For lexical-let
-(eval-when-compile
-  (require 'cl))
-
 ;; Requires
 (require 'helm)
 (require 'flyspell)
 
 
-(defun helm-flyspell--always-match (candidate)
+(defun helm-flyspell--always-match (_candidate)
   "Return true for any CANDIDATE."
   t)
 
@@ -74,9 +70,8 @@ a tuple of (command, word) to be used by flyspell-do-correct."
                          :candidate-number-limit 9999
                          :fuzzy-match t)
                        (helm-build-sync-source "Options"
-                         :candidates '(lambda ()
-                                        (lexical-let ((tmp word))
-                                          (helm-flyspell--option-candidates tmp)))
+                         :candidates (lambda ()
+                                       (helm-flyspell--option-candidates word))
                          :action 'identity
                          :candidate-number-limit 9999
                          :match 'helm-flyspell--always-match
@@ -123,7 +118,7 @@ Adapted from `flyspell-correct-word-before-point'."
             (error "Ispell: error in Ispell process"))
            (t
             ;; The word is incorrect, we have to propose a replacement.
-            (let ((res (helm-flyspell (third poss) word)))
+            (let ((res (helm-flyspell (nth 2 poss) word)))
               (cond ((stringp res)
                      (flyspell-do-correct res poss word cursor-location start end opoint))
                     (t
