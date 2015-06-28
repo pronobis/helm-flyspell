@@ -48,9 +48,7 @@
 
 (defun helm-flyspell--always-match (candidate)
   "Return true for any CANDIDATE."
-  t
-  )
-
+  t)
 
 (defun helm-flyspell--option-candidates (word)
   "Return a set of options for the given WORD."
@@ -61,9 +59,7 @@
       (setq opts (append opts (list (cons (format "Save \"%s\"" helm-pattern) (cons 'save helm-pattern))
                                     (cons (format "Accept (session) \"%s\"" helm-pattern) (cons 'session helm-pattern))
                                     (cons (format "Accept (buffer) \"%s\"" helm-pattern) (cons 'buffer helm-pattern))))))
-    opts
-    ))
-
+    opts))
 
 (defun helm-flyspell (candidates word)
   "Run helm for the given CANDIDATES given by flyspell for the WORD.
@@ -76,21 +72,17 @@ a tuple of (command, word) to be used by flyspell-do-correct."
                          :candidates candidates
                          :action 'identity
                          :candidate-number-limit 9999
-                         :fuzzy-match t
-                         )
+                         :fuzzy-match t)
                        (helm-build-sync-source "Options"
                          :candidates '(lambda ()
                                         (lexical-let ((tmp word))
-                                           (helm-flyspell--option-candidates tmp)))
+                                          (helm-flyspell--option-candidates tmp)))
                          :action 'identity
                          :candidate-number-limit 9999
                          :match 'helm-flyspell--always-match
-                         :volatile t
-                         )
-                       )
+                         :volatile t))
         :buffer "*Helm Flyspell*"
         :prompt "Correction: "))
-
 
 ;;;###autoload
 (defun helm-flyspell-correct ()
@@ -133,7 +125,7 @@ Adapted from `flyspell-correct-word-before-point'."
             ;; The word is incorrect, we have to propose a replacement.
             (let ((res (helm-flyspell (third poss) word)))
               (cond ((stringp res)
-                    (flyspell-do-correct res poss word cursor-location start end opoint))
+                     (flyspell-do-correct res poss word cursor-location start end opoint))
                     (t
                      (let ((cmd (car res))
                            (wrd (cdr res)))
@@ -143,7 +135,6 @@ Adapted from `flyspell-correct-word-before-point'."
                            (flyspell-do-correct cmd poss wrd cursor-location start end opoint)
                            (flyspell-do-correct wrd poss word cursor-location start end opoint)))))))))
           (ispell-pdict-save t)))))
-
 
 (provide 'helm-flyspell)
 ;;; helm-flyspell.el ends here
