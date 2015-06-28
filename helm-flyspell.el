@@ -2,6 +2,9 @@
 
 ;; Copyright (C) 2014 Andrzej Pronobis <a.pronobis@gmail.com>
 
+;; Author: Andrzej Pronobis
+;; URL: https://github.com/pronobis/helm-flyspell
+;; Keywords: convenience
 ;; Package-Requires: ((helm "1.6.5"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -18,6 +21,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+;;
 ;; To use, just put your cursor on or after the misspelled word and
 ;; run helm-flyspell-correct. You can of course bind it to a key as
 ;; well by adding this to your `~/.emacs` file:
