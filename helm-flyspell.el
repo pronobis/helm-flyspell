@@ -1,4 +1,4 @@
-;;; helm-flyspell.el -- Helm extension for correcting words with flyspell
+;;; helm-flyspell.el --- Helm extension for correcting words with flyspell
 
 ;; Copyright (C) 2014 Andrzej Pronobis <a.pronobis@gmail.com>
 
