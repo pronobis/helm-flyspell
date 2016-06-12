@@ -87,8 +87,7 @@ Adapted from `flyspell-correct-word-before-point'."
   ;; use the correct dictionary
   (flyspell-accept-buffer-local-defs)
   (let ((cursor-location (point))
-        (word (flyspell-get-word))
-        (opoint (point)))
+        (word (flyspell-get-word)))
     (if (consp word)
         (let ((start (car (cdr word)))
               (end (car (cdr (cdr word))))
@@ -120,15 +119,15 @@ Adapted from `flyspell-correct-word-before-point'."
             ;; The word is incorrect, we have to propose a replacement.
             (let ((res (helm-flyspell (nth 2 poss) word)))
               (cond ((stringp res)
-                     (flyspell-do-correct res poss word cursor-location start end opoint))
+                     (flyspell-do-correct res poss word cursor-location start end cursor-location))
                     (t
                      (let ((cmd (car res))
                            (wrd (cdr res)))
                        (if (string= wrd word)
-                           (flyspell-do-correct cmd poss wrd cursor-location start end opoint)
+                           (flyspell-do-correct cmd poss wrd cursor-location start end cursor-location)
                          (progn
-                           (flyspell-do-correct cmd poss wrd cursor-location start end opoint)
-                           (flyspell-do-correct wrd poss word cursor-location start end opoint)))))))))
+                           (flyspell-do-correct cmd poss wrd cursor-location start end cursor-location)
+                           (flyspell-do-correct wrd poss word cursor-location start end cursor-location)))))))))
           (ispell-pdict-save t)))))
 
 (provide 'helm-flyspell)
