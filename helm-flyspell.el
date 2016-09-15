@@ -1,4 +1,4 @@
-;;; helm-flyspell.el -- Helm extension for correcting words with flyspell  -*- lexical-binding: t; -*-
+;;; helm-flyspell.el --- Helm extension for correcting words with flyspell  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014 Andrzej Pronobis <a.pronobis@gmail.com>
 
